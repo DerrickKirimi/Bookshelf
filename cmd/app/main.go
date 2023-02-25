@@ -26,5 +26,5 @@ func main() {
 }
 
 func greet(w http.ResponseWriter, r *http.Request) { //request pointer significance
-	fmt.Fprintf(w, "Welcome on the voyage. May you be intimately familiar with its beautiful depths. Surf the wave. Don't forget your scuba! ") //Takes responsewriter 
+	fmt.Fprintf(w, "Welcome on the voyage. May you be intimately familiar with its beautiful depths. Surf the wave. Don't forget your scuba! ") //Takes responsewriter
 }
