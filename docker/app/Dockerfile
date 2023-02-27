@@ -1,11 +1,21 @@
-FROM golang:1.13-alpine
+# Build environment
+# -----------------
+FROM golang:1.13-alpine as build-env
+#Doesn't matter what name you use for the workdir as long as it is consistent throughout the dockerfile
 WORKDIR /Bookshelf
 
-RUN apk update && apk add --no-cache gcc musl-dev git bash
+RUN apk update && apk add --no-cache gcc musl-dev git 
 
 COPY . .
 
 RUN go build -ldflags '-w -s' -a -o ./bin/app ./cmd/app
+FROM alpine
+RUN apk update && apk add --no-cache bash
+
+COPY --from=build-env /Bookshelf/bin/app /Bookshelf/
 
 CMD ["/Bookshelf/bin/app"]
 EXPOSE 8080
+
+# Always run docker-compose down before running docker-compose up to stop running containers 
+# and remove containers, networks, volumes, and images created by previous up commands.
