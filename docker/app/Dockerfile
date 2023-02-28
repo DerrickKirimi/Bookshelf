@@ -13,9 +13,9 @@ FROM alpine
 RUN apk update && apk add --no-cache bash
 
 COPY --from=build-env /Bookshelf/bin/app /Bookshelf/
+EXPOSE 8080
 
 CMD ["/Bookshelf/bin/app"]
-EXPOSE 8080
 
 # Always run docker-compose down before running docker-compose up to stop running containers 
 # and remove containers, networks, volumes, and images created by previous up commands.
