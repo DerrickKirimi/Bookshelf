@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"github.com/DerrickKirimi/Bookshelf/config"
 	"github.com/DerrickKirimi/Bookshelf/server/router"	
+	lr "github.com/DerrickKirimi/Bookshelf/util"
 )
 
 func main() {
 	appConf := config.AppConfig()
-
+	logger := lr.New(appConf.Server.Debug)
 	appRouter := router.New()
 
 	mux := http.NewServeMux()
@@ -18,7 +18,7 @@ func main() {
 
 	address := fmt.Sprintf(":%d", appConf.Server.Port) //Note colon
 
-	log.Printf("Starting Server %s\n", address)
+	logger.Info().Msgf("Starting Server %v\n", address)
 	s := &http.Server{
 		Addr:         	address, //port declaration
 		Handler:      	appRouter,
@@ -28,7 +28,7 @@ func main() {
 	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed { //defensive probe. Note closed server exception
-		log.Fatal("Server startup failed")
+		logger.Fatal().Err(err).Msg("Server startup failed")
 	}
 }
 
