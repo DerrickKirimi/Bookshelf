@@ -5,13 +5,15 @@ import (
 	"net/http"
 	"github.com/DerrickKirimi/Bookshelf/config"
 	"github.com/DerrickKirimi/Bookshelf/server/router"	
+	"github.com/DerrickKirimi/Bookshelf/server/app"
 	lr "github.com/DerrickKirimi/Bookshelf/util"
 )
 
 func main() {
 	appConf := config.AppConfig()
 	logger := lr.New(appConf.Server.Debug)
-	appRouter := router.New()
+	application := app.New(logger)
+	appRouter := router.New(application)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", Greet)
