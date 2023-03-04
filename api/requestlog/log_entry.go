@@ -5,7 +5,7 @@ import (
 	"io"
 	"net"
 	"net/http"
-	"testing/quick"
+	//"testing/quick"
 	"time"
 )
 
@@ -28,12 +28,12 @@ type logEntry struct {
 	Latency 			time.Duration
 }
 
-func ipFromHostPort(hp String) string {
+func ipFromHostPort(hp string) string {
 	h, _, err := net.SplitHostPort(hp)
 	if err != nil {
 		return ""
 	}
-	if len(h) > 0 && h[0] = '[' {
+	if len(h) > 0 && h[0] == '[' {
 		return h[1 : len(h)-1]
 	}
 	return h
@@ -45,7 +45,7 @@ type readCounterCloser struct {
 }
 
 func (rcc *readCounterCloser) Read (p []byte) (n int, err error) {
-	if rcc.n != nil {
+	if rcc.err != nil {
 		return 0, rcc.err
 	}
 	n, rcc.err = rcc.r.Read(p)
@@ -65,7 +65,7 @@ func (wc *writeCounter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-func headerSize(h http.header) int64 {
+func headerSize(h http.Header) int64 {
 	var wc writeCounter
 	h.Write(&wc)
 	return int64(wc) + 2 //for CRLF

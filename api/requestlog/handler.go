@@ -52,7 +52,7 @@ func (h *Handler) ServeHTTP (w http.ResponseWriter, r *http.Request) {
 	le.RequestBodySize = rcc.n
 	le.Status = w2.code 
 	if le.Status == 0 {
-	le.Status = http.StatusOK
+		le.Status = http.StatusOK
 	}
 
 	le.ResponseHeaderSize, le.ResponseHeaderSize = w2.size()
@@ -67,10 +67,10 @@ func (h *Handler) ServeHTTP (w http.ResponseWriter, r *http.Request) {
 		Str("proto", le.Proto). 
 		Str("server_ip", le.ServerIP). 
 		Str("remote_ip", le.RemoteIP). 
-		Int("status", le.Status)
+		Int("status", le.Status).
 		Int64("resp_header_size", le.ResponseHeaderSize).
 		Int64("resp_body_size", le.ResponseBodySize). 
 		Dur("latency", le.Latency). 
-		msg("")
+		Msg("")
 		
 }

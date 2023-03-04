@@ -27,7 +27,7 @@ func NewConsole(isDebug bool) *Logger {
 	if isDebug {
 		logLevel = zerolog.TraceLevel
 	}
-
+	zerolog.SetGlobalLevel(logLevel)
 	logger := zerolog.New(os.Stdout).With().Timestamp().Logger()
 	return &Logger{logger : &logger}
 }
