@@ -22,11 +22,11 @@ type serverConf struct {
 }
 
 type DBConf struct {
-	Host     string `env:"DB_HOST, required"`
-	Port     int    `env:"DB_PORT, required"`
-	Password     string `env:"DB_PASS, required"`
-	Username string `env:"DB_USER, required"`
-	DbName     string `env:"DB_NAME, required"`
+	Host     	string `env:"DB_HOST, required"`
+	Port     	int    `env:"DB_PORT, required"`
+	Password    string `env:"DB_PASS, required"`
+	Username 	string `env:"DB_USER, required"`
+	DbName     	string `env:"DB_NAME, required"`
 }
 
 func AppConfig() *Config {
